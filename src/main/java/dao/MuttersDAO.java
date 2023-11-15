@@ -51,7 +51,7 @@ public class MuttersDAO {
   public boolean create(Mutter mutter) {
 	  // JDBCドライバを読み込む
 	  try {
-		  Class.forName("org.ppostgresql.Driver");
+		  Class.forName("org.postgresql.Driver");
 	  } catch(ClassNotFoundException e) {
 	      throw new IllegalStateException("JDBCドライバを読み込めませんでした");
 	  }

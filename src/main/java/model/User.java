@@ -2,8 +2,11 @@ package model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-  private String name; // ユーザー名
+  private String id; // ユーザー名
   private String pass; // パスワード
+  private String mail;
+  private String name;
+  private int age;
 
   public User() { }
   public User(String name, String pass) {
