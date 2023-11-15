@@ -8,14 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import dao.RegisterDAO;
+import model.RegisterLogic;
 import model.User;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID  = 1L;
 
 
 	// 登録画面を表示させる
@@ -27,25 +26,48 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	// 登録画面より入力された値をもとにデータベースへ顧客情報を登録する
-		protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-				throws ServletException, IOException {
-			// 文字コードの設定
-			response.setContentType("text/html; charset=UTF-8");
-			request.setCharacterEncoding("UTF-8");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		// 文字コードの設定
+		response.setContentType("text/html; charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
-			// 登録画面で入力された値を取得
-			String user_name = request.getParameter("name");
-			String user_password = request.getParameter("user_password");
+		// リクエストパラメータの取得
+		request.setCharacterEncoding("UTF-8");
+		String user_id = request.getParameter("user_id");
+		String mail = request.getParameter("mail");
+		String pass = request.getParameter("pass");
+		String name = request.getParameter("name");
+		String age = request.getParameter("age");
+		int num = Integer.parseInt(age);
+		//↑が通っているか確認
+		System.out.println(user_id);
+		System.out.println(mail);
+		System.out.println(pass);
+		System.out.println(name);
+		System.out.println(age);
 
-			// ユーザーのセッションを取得
-			HttpSession session = request.getSession();
-			User loginUser = (User) session.getAttribute("loginUser");
-			RegisterDAO register = new RegisterDAO();
-			// 登録処理を実行
-			register.register(user_name, user_password);
-			
-			RequestDispatcher dispatcher =
-					request.getRequestDispatcher("WEB-INF/jsp/loginResult.jsp");
-			dispatcher.forward(request, response);
+		if(user_id != null && user_id.length() != 0 && mail != null && mail.length() != 0 && 
+				pass != null && pass.length() != 0 && name != null && name.length() != 0 &&
+				age != null && age.length() != 0) {
+			User user = new User(user_id,name,pass,mail,num);
+			RegisterLogic registerLogic = new RegisterLogic();
+			registerLogic.execute(user);
+			System.out.println("実行されたよ");
+		}else {
+			request.setAttribute("erroMsg","入力されてない箇所があります");
+			System.out.println("実行されtenai");
 		}
+
+		RequestDispatcher dispatcher =
+				request.getRequestDispatcher("WEB-INF/jsp/loginResult.jsp");
+		dispatcher.forward(request, response);
 	}
+
+
+}
+
+
+
+
+

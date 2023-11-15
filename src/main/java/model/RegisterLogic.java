@@ -1,10 +1,10 @@
 package model;
 
-import dao.MuttersDAO;
+import dao.RegisterDAO;
 
 public class RegisterLogic {
-  public void execute(Mutter mutter) { 
-    MuttersDAO dao = new MuttersDAO();
-    dao.create(mutter);
+  public void execute(User user) { 
+    RegisterDAO dao = new RegisterDAO();
+    dao.create(user);
   }
 }

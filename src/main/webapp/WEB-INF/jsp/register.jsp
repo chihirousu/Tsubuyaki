@@ -11,24 +11,24 @@
 		<h1 class="mb-3" style="text-align: center">登録画面</h1>
 		<form action="/dokoTsubu/RegisterServlet" method="post">
 		  <div class="mb-3">
-		    <label for="userId" class="form-label">ユーザーiD</label>
-		    <input type="text" class="form-control" id="userId" name="user_id" required>
+		    <label for="user_id" class="form-label">ユーザーiD</label>
+		    <input type="text" name="user_id" required>
 		  </div>
 		  <div class="mb-3">
-		    <label for="passwoed" class="form-label">パスワード</label>
-		    <input type="text" class="form-control" id="password" name="password" required>
+		    <label for="pass" class="form-label">パスワード</label>
+		   <input type="text" name="pass" required>
 		  </div>
 		  <div class="mb-3">
-		    <label for="Mail" class="form-label">メールアドレス</label>
-		    <input type="text" class="form-control" id="Mail" name="Mail" required>
+		    <label for="mail" class="form-label">メールアドレス</label>
+		   <input type="text" name="mail" required>
 		  </div>
 		  <div class="mb-3">
-		    <label for="Name" class="form-label">名前（漢字）</label>
-		    <input type="text" class="form-control" id="Name" name="name" required>
+		    <label for="name" class="form-label">名前（漢字）</label>
+		    <input type="text" name="name" required>
 		  </div>
 		   <div class="mb-3">
 		    <label for="age" class="form-label">年齢</label>
-		    <input type="text" class="form-control" id="age" name="age" required>
+		    <input type="text" name="age" required>
 		  </div>
 		  <button type="submit" class="btn btn-primary">登録する</button>
 		</form>

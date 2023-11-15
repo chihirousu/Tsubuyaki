@@ -1,57 +1,52 @@
 package dao;
 
-import java.io.FileNotFoundException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//import config.DBconfig;
+import model.User;
 
 public class RegisterDAO {
-	
+
 	private final String JDBC_URL ="jdbc:postgresql://localhost:5432/postgres";
 	private final String DB_USER = "uejochihiro";
 	private final String DB_PASS = "kooy0913";
 
-	
-	public void register(String name, String password) throws FileNotFoundException {
-
-	
-
-	// データベースへの接続
-	// try〜catch〜resources構文を使用
-	try(Connection conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS)){
-		
-		// 実行SQL
-		  String sql = "SELECT ID,NAME,TEXT FROM ACCOUNTS ORDER BY ID DESC";
-	      PreparedStatement pStmt = conn.prepareStatement(sql);
-	      
-	      // SELECTを実行
-	      ResultSet rs = pStmt.executeQuery();
-	      
-		// オートコミット機能を無効化
-		conn.setAutoCommit(false);
-
-		try(PreparedStatement stmt = conn.prepareStatement(sql)){
-			// 変数register_sqlの一番目の?にnameをセット
-			stmt.setString(1, name);
-			// 変数register_sqlの一番目の?にpassをセット
-			stmt.setString(2, password);
-			// SQLの実行
-			stmt.executeUpdate();
-
-			// コミット
-			conn.commit();
-			System.out.println("コミット処理を行いました");
-		} catch (SQLException e) {
-			conn.rollback();
-			System.out.println("ロールバック処理を行いました");
-			e.printStackTrace();
+	public boolean create(User user) {
+		// JDBCドライバを読み込む
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
 		}
-	} catch (SQLException e1) {
-		e1.printStackTrace();
+		// データベース接続
+		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			// INSERT文の準備
+			String sql = "INSERT INTO ACCOUNTS(USER_ID,PASS,MAIL,NAME,AGE) VALUES(?,?,?,?,?)";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+//			// INSERT文中の「?」に使用する値を設定しSQLを完成
+			pStmt.setString(1, user.getuser_id());
+			pStmt.setString(2, user.getPass());
+			pStmt.setString(3, user.getMail());
+			pStmt.setString(4, user.getName());
+			pStmt.setInt(5, user.getAge());
+//			
+			// INSERT文を実行（resultには追加された行数が代入される）
+			int result = pStmt.executeUpdate();
+			
+			
+
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
-}
 }
