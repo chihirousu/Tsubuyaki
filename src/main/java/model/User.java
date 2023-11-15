@@ -8,11 +8,16 @@ public class User implements Serializable {
   private String name;
   private int age;
 
-  public User() { }
-  public User(String name, String pass) {
+  public User(String id,String name, String pass,String mail,int age) {
     this.name = name;
     this.pass = pass;
+    this.id = id;
+    this.mail = mail;
+    this.age = age;
   }
   public String getName() { return name; }
   public String getPass() { return pass; }
+  public String getId() { return id; }
+  public String getMail() { return mail; }
+  public int getAge() { return age; }
 }
