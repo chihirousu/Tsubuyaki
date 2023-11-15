@@ -12,6 +12,7 @@
 ユーザー名：<input type="text" name="name"><br>
 パスワード：<input type="password" name="pass"><br>
 <input type="submit" value="ログイン">
+<a href="<%=request.getContextPath() %>/RegisterServlet">ユーザー登録画面へ</a>
 </form>
 </body>
 </html>

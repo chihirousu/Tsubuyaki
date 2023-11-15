@@ -25,7 +25,7 @@ public class Login extends HttpServlet {
     String pass = request.getParameter("pass");
 
     // Userインスタンス（ユーザー情報）の生成
-    User user = new User(name, pass);
+    User user = new User("",name,pass,"",0);
 
     // ログイン処理
     LoginLogic loginLogic = new LoginLogic();
@@ -36,6 +36,7 @@ public class Login extends HttpServlet {
       // ユーザー情報をセッションスコープに保存
       HttpSession session = request.getSession();
       session.setAttribute("loginUser", user);
+  
     }
     // ログイン結果画面にフォワード
     RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/loginResult.jsp");
